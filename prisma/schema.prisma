@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 1. User and Attribute Models
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique @db.VarChar(100)
+  email     String?  @db.VarChar(255)
+  createdAt DateTime @default(now())
+
+  attributes UserAttributes[]
+  documents  Document[]
+}
+
+model UserAttributes {
+  userId         Int    @db.Integer
+  attributeKey   String @db.VarChar(100)
+  attributeValue String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, attributeKey])
+  @@index([userId, attributeKey])
+}
+
+enum Classification {
+  PUBLIC
+  INTERNAL
+  CONFIDENTIAL
+}
+
+// 2. Document Model (Resource)
+model Document {
+  id             Int             @id @default(autoincrement())
+  title          String          @db.VarChar(255)
+  content        String?
+  ownerId        Int?
+  department     String?         @db.VarChar(100)
+  classification Classification?
+  createdAt      DateTime        @default(now())
+
+  owner User? @relation(fields: [ownerId], references: [id])
+}

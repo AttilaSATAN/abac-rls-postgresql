@@ -1,0 +1,23 @@
+{
+  "name": "abac-rls-postgresql",
+  "version": "1.0.0",
+  "description": "A showcase of row level access policy implementation with postgresql and prisma. ",
+  "license": "ISC",
+  "author": "Attila Satan",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "prisma": "^7.0.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.0.1",
+    "@prisma/client": "^7.0.1",
+    "dotenv": "^17.2.3"
+  }
+}
